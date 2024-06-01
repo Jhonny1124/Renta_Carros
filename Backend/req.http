@@ -1,5 +1,5 @@
 
-GET /cars HTTP/1.1
+GET /cars/id/1 HTTP/1.1
 Host: localhost:8080
 
 POST /cars HTTP/1.1
@@ -7,25 +7,20 @@ Host: localhost:8080
 Content-Type: application/json
 
  {
-    "tipo": {
-      "marca": "Mercedes",
-      "referencia": "G63",
-      "modelo": "2022",
-      "carroceria": "SUV"
-    },
-    "especificaciones": {
-      "potencia": "100 HP",
-      "torque": "100 N/m",
-      "transmision": "At",
-      "motor": "2.5 lt",
-      "pasajeros": "7 Pasajeros",
-      "combustible": "Extra",
-      "consumo": "50 Km/Galon",
-      "almacenamiento": "150 litros"
-    },
-    "infoadicional": {
-      "descripcion": "Chimba de Carro",
-      "lujo": 1,
-      "ddeportivo": 0
-    }
+		"marca":         "Mazda",
+		"referencia":     "CX-30",
+		"modelo":         "2023",
+		"tipo":           "SUV",
+		"potencia":       "180 HP",
+		"torque":         "200 Nm",
+		"transmision":    "Automatica",
+		"motor":          "2.5L",
+		"pasajeros":      "7Pasajeros",
+		"combustible":    "Extra",
+		"consumo":        "Elevado",
+		"almacenamiento": "Elevado",
+		"descripcion":    "Que chimba de carro",
+		"lujo":           1,
+		"deportivo":      0,
+		"imagen":         "Holaaaa"
   }

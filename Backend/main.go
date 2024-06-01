@@ -1,20 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/Jhonny1124/Renta_Carros/Backend/controllers"
 	"github.com/Jhonny1124/Renta_Carros/Backend/handlers"
 	"github.com/Jhonny1124/Renta_Carros/Backend/models"
 	"github.com/Jhonny1124/Renta_Carros/Backend/repository"
+	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 )
 
 func main() {
 
-	conn, err := ConectarDB("joda", "postgres")
+	conn, err := ConectarDB(fmt.Sprintf("postgres://%s:%s@db:%s/%s?sslmode=disable", os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME")), "postgres")
 	if err != nil {
 		log.Fatalln("error conectando a la base de datos", err.Error())
 	}
@@ -47,25 +51,25 @@ func main() {
 		log.Fatalln("error creando un nuevo handler", err.Error())
 	}
 
-	mux := http.NewServeMux()
+	router := mux.NewRouter()
 
-	mux.HandleFunc("GET /cars", handler.ListarCarros())
-	mux.HandleFunc("GET /cars/marca/{marca}", handler.ListarCarrosMarca())
-	mux.HandleFunc("GET /cars/tipo/{tipo}", handler.ListarCarrosTipo())
-	mux.HandleFunc("GET /cars/transmision/{transmision}", handler.ListarCarrosTransmision())
-	mux.HandleFunc("GET /cars/combustible/{combustible}", handler.ListarCarrosCombustible())
-	mux.HandleFunc("POST /cars", handler.CrearCarros())
-	mux.HandleFunc("GET /cars/id/{id}", handler.TraerCarro())
-	mux.HandleFunc("PATCH /cars/{id}", handler.ActualizarCarro())
-	mux.HandleFunc("DELETE /cars/{id}", handler.EliminarCarro())
+	router.Handle("/cars", http.HandlerFunc(handler.ListarCarros)).Methods(http.MethodGet)
+	router.Handle("/cars/marca/{marca}", http.HandlerFunc(handler.ListarCarrosMarca)).Methods(http.MethodGet)
+	router.Handle("/cars/tipo/{tipo}", http.HandlerFunc(handler.ListarCarrosTipo)).Methods(http.MethodGet)
+	router.Handle("/cars/transmision/{transmision}", http.HandlerFunc(handler.ListarCarrosTransmision)).Methods(http.MethodGet)
+	router.Handle("/cars/combustible/{combustible}}", http.HandlerFunc(handler.ListarCarrosCombustible)).Methods(http.MethodGet)
+	router.Handle("/cars", http.HandlerFunc(handler.CrearCarros)).Methods(http.MethodPost)
+	router.Handle("/cars/id/{id}", http.HandlerFunc(handler.TraerCarro)).Methods(http.MethodGet)
+	router.Handle("/cars/{id}", http.HandlerFunc(handler.ActualizarCarro)).Methods(http.MethodPatch)
+	router.Handle("/cars/{id}", http.HandlerFunc(handler.EliminarCarro)).Methods(http.MethodDelete)
 
-	mux.HandleFunc("GET /users", handler2.ListarUsuarios())
-	mux.HandleFunc("POST /users", handler2.CrearUsuario())
-	mux.HandleFunc("GET /users/{id}", handler2.TraerUsuario())
-	mux.HandleFunc("PATCH /users/{id}", handler2.ActualizarUsuario())
-	mux.HandleFunc("DELETE /users/{id}", handler2.EliminarUsuario())
+	router.Handle("/users", http.HandlerFunc(handler2.ListarUsuarios)).Methods(http.MethodGet)
+	router.Handle("/users", http.HandlerFunc(handler2.CrearUsuario)).Methods(http.MethodPost)
+	router.Handle("/users/{id}", http.HandlerFunc(handler2.TraerUsuario)).Methods(http.MethodGet)
+	router.Handle("/users/{id}", http.HandlerFunc(handler2.ActualizarUsuario)).Methods(http.MethodPatch)
+	router.Handle("/users/{id}", http.HandlerFunc(handler2.EliminarUsuario)).Methods(http.MethodDelete)
 
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 func ConectarDB(url, driver string) (*sqlx.DB, error) {

@@ -12,18 +12,14 @@ import (
 )
 
 var (
-	ListQueryC   = "SELECT * FROM Carro"
-	ListQueryCm  = "SELECT * FROM Carro WHERE marca=$1"
-	ListQueryCt  = "SELECT * FROM Carro WHERE tipo=$1"
-	ListQueryCtr = "SELECT * FROM Carro WHERE transmision=$1"
-	ListQueryCc  = "SELECT * FROM Carro WHERE combustible=$1"
+	ListQueryC   = "SELECT * FROM Carro limit $1 offset $2"
 	ReadQueryC   = "SELECT * FROM Carro WHERE id=$1"
-	CreateQueryC = "INSERT INTO Carro (marca, referencia, modelo, carroceria, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen) VALUES (:marca, :referencia, :modelo, :carroceria, :potencia, :torque, :transmision, :motor, :pasajeros, :combustible, :consumo, :almacenamiento, :descripcion, :lujo, :deportivo, :imagen) RETURNING id"
+	CreateQueryC = "INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen) VALUES (:marca, :referencia, :modelo, :tipo, :potencia, :torque, :transmision, :motor, :pasajeros, :combustible, :consumo, :almacenamiento, :descripcion, :lujo, :deportivo, :imagen) RETURNING id"
 	UpdateQueryC = "UPDATE Carro SET %s WHERE id=:id"
 	DeleteQueryC = "DELETE FROM Carro WHERE id=$1"
 )
 var (
-	ListQueryU   = "SELECT * FROM Usuario"
+	ListQueryU   = "SELECT * FROM Usuario limit $1 offset $2"
 	ReadQueryU   = "SELECT * FROM Usuario WHERE id=$1"
 	CreateQueryU = "INSERT INTO Usuario (nombre, contrasena, reservas) VALUES (:nombre, :contrasena, :reservas) RETURNING id"
 	UpdateQueryU = "UPDATE Usuario SET %s WHERE id=:id"
@@ -55,8 +51,8 @@ func NewcontrollerU(repo repository.Repository[models.Usuario]) (*ControllerU, e
 	}, nil
 }
 
-func (c *Controller) ListarCarros() ([]byte, error) {
-	carros, _, err := c.repo.List(context.Background(), ListQueryC, 200, 0)
+func (c *Controller) ListarCarros(limit, offset int) ([]byte, error) {
+	carros, _, err := c.repo.List(context.TODO(), ListQueryC, limit, offset)
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
@@ -66,50 +62,27 @@ func (c *Controller) ListarCarros() ([]byte, error) {
 
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
-		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+		return nil, fmt.Errorf("fallo a leer carros, con error1: %s", err.Error())
 	}
 	return jsonCarro, nil
 }
 
-func (c *Controller) ListarCarrosMarca() ([]byte, error) {
-	carros, _, err := c.repo.List(context.Background(), ListQueryCm, 200, 0)
+func (c *Controller) ListarCarrosMarca(marca string, limit, offset int) ([]byte, error) {
+	carros, _, err := c.repo.List(context.TODO(), ListQueryC, limit, offset)
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
 	}
 
-	jsonCarro, err := json.Marshal(carros)
+	var carromarca []*models.Carro
 
-	if err != nil {
-		log.Printf("fallo a leer carros, con error: %s", err.Error())
-		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
-	}
-	return jsonCarro, nil
-}
-
-func (c *Controller) ListarCarrosTipo() ([]byte, error) {
-	carros, _, err := c.repo.List(context.Background(), ListQueryCt, 200, 0)
-	if err != nil {
-		log.Printf("fallo a leer carros, con error: %s", err.Error())
-		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+	for _, carro := range carros {
+		if carro.Marca == marca {
+			carromarca = append(carromarca, carro)
+		}
 	}
 
-	jsonCarro, err := json.Marshal(carros)
-
-	if err != nil {
-		log.Printf("fallo a leer carros, con error: %s", err.Error())
-		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
-	}
-	return jsonCarro, nil
-}
-func (c *Controller) ListarCarrosTransmision() ([]byte, error) {
-	carros, _, err := c.repo.List(context.Background(), ListQueryCtr, 200, 0)
-	if err != nil {
-		log.Printf("fallo a leer carros, con error: %s", err.Error())
-		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
-	}
-
-	jsonCarro, err := json.Marshal(carros)
+	jsonCarro, err := json.Marshal(carromarca)
 
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
@@ -118,14 +91,45 @@ func (c *Controller) ListarCarrosTransmision() ([]byte, error) {
 	return jsonCarro, nil
 }
 
-func (c *Controller) ListarCarrosCombustible() ([]byte, error) {
-	carros, _, err := c.repo.List(context.Background(), ListQueryCc, 200, 0)
+func (c *Controller) ListarCarrosTipo(tipo string, limit, offset int) ([]byte, error) {
+	carros, _, err := c.repo.List(context.TODO(), ListQueryC, limit, offset)
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
 	}
 
-	jsonCarro, err := json.Marshal(carros)
+	var carrotipo []*models.Carro
+
+	for _, carro := range carros {
+		if carro.Tipo == tipo {
+			carrotipo = append(carrotipo, carro)
+		}
+	}
+
+	jsonCarro, err := json.Marshal(carrotipo)
+
+	if err != nil {
+		log.Printf("fallo a leer carros, con error: %s", err.Error())
+		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+	}
+	return jsonCarro, nil
+}
+func (c *Controller) ListarCarrosTransmision(transmision string, limit, offset int) ([]byte, error) {
+	carros, _, err := c.repo.List(context.TODO(), ListQueryC, limit, offset)
+	if err != nil {
+		log.Printf("fallo a leer carros, con error: %s", err.Error())
+		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+	}
+
+	var carrotransmision []*models.Carro
+
+	for _, carro := range carros {
+		if carro.Transmision == transmision {
+			carrotransmision = append(carrotransmision, carro)
+		}
+	}
+
+	jsonCarro, err := json.Marshal(carrotransmision)
 
 	if err != nil {
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
@@ -134,8 +138,32 @@ func (c *Controller) ListarCarrosCombustible() ([]byte, error) {
 	return jsonCarro, nil
 }
 
-func (c *ControllerU) ListarUsuarios() ([]byte, error) {
-	usuarios, _, err := c.repo.List(context.Background(), ListQueryU, 200, 0)
+func (c *Controller) ListarCarrosCombustible(combustible string, limit, offset int) ([]byte, error) {
+	carros, _, err := c.repo.List(context.TODO(), ListQueryC, limit, offset)
+	if err != nil {
+		log.Printf("fallo a leer carros, con error: %s", err.Error())
+		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+	}
+
+	var carrocombustible []*models.Carro
+
+	for _, carro := range carros {
+		if carro.Combustible == combustible {
+			carrocombustible = append(carrocombustible, carro)
+		}
+	}
+
+	jsonCarro, err := json.Marshal(carrocombustible)
+
+	if err != nil {
+		log.Printf("fallo a leer carros, con error: %s", err.Error())
+		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
+	}
+	return jsonCarro, nil
+}
+
+func (c *ControllerU) ListarUsuarios(limit, offset int) ([]byte, error) {
+	usuarios, _, err := c.repo.List(context.TODO(), ListQueryU, limit, offset)
 	if err != nil {
 		log.Printf("fallo a leer usuarios, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer usuarios, con error: %s", err.Error())
@@ -151,7 +179,7 @@ func (c *ControllerU) ListarUsuarios() ([]byte, error) {
 }
 
 func (c *Controller) TraerCarro(id string) ([]byte, error) {
-	carro, err := c.repo.Read(context.Background(), ReadQueryC, id)
+	carro, err := c.repo.Read(context.TODO(), ReadQueryC, id)
 	if err != nil {
 		log.Printf("fallo a leer un carro, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer un carro, con error: %s", err.Error())
@@ -165,7 +193,7 @@ func (c *Controller) TraerCarro(id string) ([]byte, error) {
 }
 
 func (c *ControllerU) TraerUsuario(id string) ([]byte, error) {
-	usuario, err := c.repo.Read(context.Background(), ReadQueryU, id)
+	usuario, err := c.repo.Read(context.TODO(), ReadQueryU, id)
 	if err != nil {
 		log.Printf("fallo a leer un usuario, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer un usuario, con error: %s", err.Error())
@@ -204,7 +232,7 @@ func (c *Controller) CrearCarro(body []byte) (int64, error) {
 		"deportivo":      NuevoCarro.Deportivo,
 		"imagen":         NuevoCarro.Imagen,
 	}
-	NuevoId, err := c.repo.Create(context.Background(), CreateQueryC, valores_columnas)
+	NuevoId, err := c.repo.Create(context.TODO(), CreateQueryC, valores_columnas)
 	if err != nil {
 		log.Printf("fallo a crear un carro, con error: %s", err.Error())
 		return 0, fmt.Errorf("fallo a crear un carro, con error: %s", err.Error())
@@ -225,7 +253,7 @@ func (c *ControllerU) CrearUsuario(body []byte) (int64, error) {
 		"contrasena": NuevoUsuario.Contrasena,
 		"reservas":   NuevoUsuario.Reservas,
 	}
-	NuevoId, err := c.repo.Create(context.Background(), CreateQueryU, valores_columnas)
+	NuevoId, err := c.repo.Create(context.TODO(), CreateQueryU, valores_columnas)
 	if err != nil {
 		log.Printf("fallo a crear un usuario, con error: %s", err.Error())
 		return 0, fmt.Errorf("fallo a crear un usuario, con error: %s", err.Error())
@@ -255,7 +283,7 @@ func (c *Controller) ActualizarCarro(body []byte, id string) error {
 	}
 	UpdtQueryC := fmt.Sprintf(UpdateQueryC, buildUpdateQuery(valoresActualizarBody))
 	valoresActualizarBody["id"] = id
-	err = c.repo.Update(context.Background(), UpdtQueryC, valoresActualizarBody)
+	err = c.repo.Update(context.TODO(), UpdtQueryC, valoresActualizarBody)
 	if err != nil {
 		log.Printf("fallo al actualizar un carro, con error: %s", err.Error())
 		return fmt.Errorf("fallo al actualizar un carro, con error: %s", err.Error())
@@ -276,7 +304,7 @@ func (c *ControllerU) ActualizarUsuario(body []byte, id string) error {
 	}
 	UpdtQueryU := fmt.Sprintf(UpdateQueryU, buildUpdateQuery(valoresActualizarBody))
 	valoresActualizarBody["id"] = id
-	err = c.repo.Update(context.Background(), UpdtQueryU, valoresActualizarBody)
+	err = c.repo.Update(context.TODO(), UpdtQueryU, valoresActualizarBody)
 	if err != nil {
 		log.Printf("fallo al actualizar un usuario, con error: %s", err.Error())
 		return fmt.Errorf("fallo al actualizar un usuario, con error: %s", err.Error())
@@ -285,7 +313,7 @@ func (c *ControllerU) ActualizarUsuario(body []byte, id string) error {
 }
 
 func (c *Controller) EliminarCarro(id string) error {
-	err := c.repo.Delete(context.Background(), DeleteQueryC, id)
+	err := c.repo.Delete(context.TODO(), DeleteQueryC, id)
 	if err != nil {
 		log.Printf("fallo al Eliminar un carro, con error: %s", err.Error())
 		return fmt.Errorf("fallo al Eliminar un carro, con error: %s", err.Error())
@@ -294,7 +322,7 @@ func (c *Controller) EliminarCarro(id string) error {
 }
 
 func (c *ControllerU) EliminarUsuario(id string) error {
-	err := c.repo.Delete(context.Background(), DeleteQueryU, id)
+	err := c.repo.Delete(context.TODO(), DeleteQueryU, id)
 	if err != nil {
 		log.Printf("fallo al Eliminar un usuario, con error: %s", err.Error())
 		return fmt.Errorf("fallo al Eliminar un usuario, con error: %s", err.Error())

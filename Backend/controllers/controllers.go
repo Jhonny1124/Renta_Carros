@@ -135,6 +135,7 @@ func (c *Controller) ListarCarrosTransmision(transmision string, limit, offset i
 		log.Printf("fallo a leer carros, con error: %s", err.Error())
 		return nil, fmt.Errorf("fallo a leer carros, con error: %s", err.Error())
 	}
+
 	return jsonCarro, nil
 }
 

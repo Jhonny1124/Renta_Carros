@@ -17,5 +17,5 @@ type Carro struct {
 	Descripcion    string `json:"descripcion" db:"descripcion"`
 	Lujo           int    `json:"lujo" db:"lujo"`
 	Deportivo      int    `json:"deportivo" db:"deportivo"`
-	Imagen         string `json:"imagen" db:"imagen"`
+	Imagen         string `json:"imagen" db:"imagen"` /*URL de la imagen*/
 }

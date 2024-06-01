@@ -94,7 +94,6 @@ func (hc *HandlerCarros) ListarCarrosTransmision(w http.ResponseWriter, r *http.
 }
 
 func (hc *HandlerCarros) ListarCarrosCombustible(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 	combustible := vars["combustible"]
 

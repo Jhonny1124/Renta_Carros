@@ -68,7 +68,9 @@ func main() {
 	router.Handle("/users/{id}", http.HandlerFunc(handler2.ActualizarUsuario)).Methods(http.MethodPatch)
 	router.Handle("/users/{id}", http.HandlerFunc(handler2.EliminarUsuario)).Methods(http.MethodDelete)
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	corsRouter := corsMiddleware(router)
+
+	log.Fatal(http.ListenAndServe(":8080", corsRouter))
 }
 
 func ConectarDB(url, driver string) (*sqlx.DB, error) {
@@ -81,4 +83,20 @@ func ConectarDB(url, driver string) (*sqlx.DB, error) {
 
 	log.Printf("Nos conectamos bien a la base de datos db: %#v", db)
 	return db, nil
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		// Manejar la solicitud preflight
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
 }

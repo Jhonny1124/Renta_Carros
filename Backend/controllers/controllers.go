@@ -14,7 +14,7 @@ import (
 var (
 	ListQueryC   = "SELECT * FROM Carro limit $1 offset $2"
 	ReadQueryC   = "SELECT * FROM Carro WHERE id=$1"
-	CreateQueryC = "INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen) VALUES (:marca, :referencia, :modelo, :tipo, :potencia, :torque, :transmision, :motor, :pasajeros, :combustible, :consumo, :almacenamiento, :descripcion, :lujo, :deportivo, :imagen) RETURNING id"
+	CreateQueryC = "INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen, reservado) VALUES (:marca, :referencia, :modelo, :tipo, :potencia, :torque, :transmision, :motor, :pasajeros, :combustible, :consumo, :almacenamiento, :descripcion, :lujo, :deportivo, :imagen, :reservado) RETURNING id"
 	UpdateQueryC = "UPDATE Carro SET %s WHERE id=:id"
 	DeleteQueryC = "DELETE FROM Carro WHERE id=$1"
 )
@@ -232,6 +232,7 @@ func (c *Controller) CrearCarro(body []byte) (int64, error) {
 		"lujo":           NuevoCarro.Lujo,
 		"deportivo":      NuevoCarro.Deportivo,
 		"imagen":         NuevoCarro.Imagen,
+		"reservado":      NuevoCarro.Reservado,
 	}
 	NuevoId, err := c.repo.Create(context.TODO(), CreateQueryC, valores_columnas)
 	if err != nil {

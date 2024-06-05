@@ -18,4 +18,5 @@ type Carro struct {
 	Lujo           int    `json:"lujo" db:"lujo"`
 	Deportivo      int    `json:"deportivo" db:"deportivo"`
 	Imagen         string `json:"imagen" db:"imagen"` /*URL de la imagen*/
+	Reservado      int    `json:"reservado" db:"reservado"`
 }

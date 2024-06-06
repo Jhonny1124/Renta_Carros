@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/script.js" async></script>
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <section id="iniciosesion">
+            <img src="../imagenes/Logo1.0.png" alt="Logo en negro">
+            <input type="text" placeholder="Ingrese Nombre de Usuario" class="barra" id="nombreusuario" onkeypress="VerificacionEnter(event,0)">
+            <input type="password" placeholder="Ingrese Contraseña" class="barra" id="contrasena" onkeypress="VerificacionEnter(event,0)">
+            <p>¿No tienes cuenta? <a href="#" onclick="PasarCrearUsuario()">Crea una cuenta</a></p>
+            <button id="lupa" onclick="IniciarSesion()">Iniciar Sesion</button>
+        </section>
+        <section id="CrearUsuario">
+            <img src="../imagenes/Logo1.0.png" alt="Logo en negro">
+            <input type="text" placeholder="Crear Nombre de Usuario" class="barra" id="nombreusuarionuevo" onkeypress="VerificacionEnter(event,1)">
+            <input type="password" placeholder="Crear Contraseña" class="barra" id="contrasenanueva" onkeypress="VerificacionEnter(event,1)">
+            <input type="password" placeholder="Confirme Contraseña" class="barra" id="confirmarcontrasena" onkeypress="VerificacionEnter(event,1)">
+            <p>¿Ya tienes cuenta? <a href="#" onclick="PasarInicioSesion()">Inicia Sesion</a></p>
+            <button id="lupa" onclick="CrearUsuario()">Crear Usuario</button>
+        </section>
+    </main>
+</body>
+</html>

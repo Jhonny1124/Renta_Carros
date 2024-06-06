@@ -70,4 +70,12 @@ async function buscar() {
     };
     const datos = await getdata('http://localhost:8080/cars');
     console.log(datos);
-  }
+}
+
+const nombreUsuario = sessionStorage.getItem('nombreUsuario');
+const contrasena = sessionStorage.getItem('contrasenaUsuario');
+
+function prueba(){
+    console.log(nombreUsuario)
+    console.log(contrasena)
+}

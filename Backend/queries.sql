@@ -16,14 +16,15 @@ CREATE TABLE IF NOT EXISTS Carro (
     lujo INT,
     deportivo INT,
     imagen TEXT,
-    reservado INT
+    reservado INT,
+    precio TEXT
 );
 
-INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen, reservado) 
-VALUES ('Kia', 'Kia Picanto Zenith', '2020', 'Hatchback', '83 HP', '112 Nm','Manual', '1.25L', '5 Pasajeros', 'Corriente', '70 km/galon', '255L', 'Carro pequeño para transportarse en la ciudad', 0, 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRedPGs70M7UOKozuucEnt-ENxYuEGB_x_Fg&s',0);
+INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen, reservado, precio) 
+VALUES ('Kia', 'Kia Picanto Zenith', '2020', 'Hatchback', '83 HP', '112 Nm','Manual', '1.25L', '5 Pasajeros', 'Corriente', '70 km/galon', '255L', 'Carro pequeño para transportarse en la ciudad', 0, 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRedPGs70M7UOKozuucEnt-ENxYuEGB_x_Fg&s',0,'$90.000/Dia');
 
-INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen, reservado) 
-VALUES ('Volkswagen', 'Volkswagen Golf R', '2022', 'Hatchback', '315 HP', '400 Nm','Automatica', '2.0L', '5 Pasajeros', 'Extra', '50 km/galon', '341L', 'Carro con potencia increible y un diseño muy deportivo', 1, 1, 'https://www.namesnack.com/images/Namesnack-nombres-para-concesionarios-de-autos-5472x3648-20230523.jpeg?crop=21:16,smart&width=420&dpr=2',0);
+INSERT INTO Carro (marca, referencia, modelo, tipo, potencia, torque, transmision, motor, pasajeros, combustible, consumo, almacenamiento, descripcion, lujo, deportivo, imagen, reservado, precio) 
+VALUES ('Volkswagen', 'Volkswagen Golf R', '2022', 'Hatchback', '315 HP', '400 Nm','Automatica', '2.0L', '5 Pasajeros', 'Extra', '50 km/galon', '341L', 'Carro con potencia increible y un diseño muy deportivo', 1, 1, 'https://www.elcarrocolombiano.com/wp-content/uploads/2020/11/2022_Golf_R_European_model_shown-Large-12436.jpg',0,'$300.000/Dia');
 
 CREATE TABLE IF NOT EXISTS Usuario (
     id SERIAL PRIMARY KEY,

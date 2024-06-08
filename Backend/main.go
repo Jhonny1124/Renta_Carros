@@ -56,7 +56,7 @@ func main() {
 	router.Handle("/cars/marca/{marca}", http.HandlerFunc(handler.ListarCarrosMarca)).Methods(http.MethodGet)
 	router.Handle("/cars/tipo/{tipo}", http.HandlerFunc(handler.ListarCarrosTipo)).Methods(http.MethodGet)
 	router.Handle("/cars/transmision/{transmision}", http.HandlerFunc(handler.ListarCarrosTransmision)).Methods(http.MethodGet)
-	router.Handle("/cars/combustible/{combustible}}", http.HandlerFunc(handler.ListarCarrosCombustible)).Methods(http.MethodGet)
+	router.Handle("/cars/combustible/{combustible}", http.HandlerFunc(handler.ListarCarrosCombustible)).Methods(http.MethodGet)
 	router.Handle("/cars", http.HandlerFunc(handler.CrearCarros)).Methods(http.MethodPost)
 	router.Handle("/cars/id/{id}", http.HandlerFunc(handler.TraerCarro)).Methods(http.MethodGet)
 	router.Handle("/cars/{id}", http.HandlerFunc(handler.ActualizarCarro)).Methods(http.MethodPatch)

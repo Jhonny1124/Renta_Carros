@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../scripts/inicio.js" async></script>
@@ -14,11 +17,87 @@
         <header>
             <img src="../imagenes/Logo2.0.png" alt="Logo en blanco">
             <div id="opciones">
-                <a href="#">Home</a>
-                <a href="#">Categorias</a>
+                <a href="#" onclick="Inicio()">Home</a>
+                <a href="#" id="menu" onmouseover="MostrarCategorias()"  onmouseout="OcultarCategorias()">Categorias</a>
                 <a href="#">Contacto</a>
+                <a href="#" id="usuarioimagen"><img src="../imagenes/usuario.png" alt="Usuario"></a>
             </div>
         </header>
+        <div id="categoria" class="despegable" onmouseover="MostrarCategorias()" onmouseout="OcultarCategorias()">
+            <a href="#" onclick="tipoFiltro(1);buscar('')">Todas las categorias</a>
+            <a href="#" onclick="MostrarMarcas();tipoFiltro(2)">Marcas</a>
+            <a href="#" onclick="MostrarTipos();tipoFiltro(3)">Tipo de Auto</a>
+            <a href="#" onclick="MostrarTransmision();tipoFiltro(4)">Tipo de Transmision</a>
+            <a href="#" onclick="MostrarCombustible();tipoFiltro(5)">Combustible</a>
+        </div>
+        <div id="marcas" class="despegable" onmouseover="MostrarMarcas()" onmouseout="OcultarCategorias()">
+            <a href="#" onclick="buscar('Kia')">Kia</a>
+            <a href="#" onclick="buscar('Toyota')">Toyota</a>
+            <a href="#" onclick="buscar('Volkswagen')">Volkswagen</a>
+            <a href="#" onclick="buscar('Mercedes-Benz')">Mercedes-Benz</a>
+            <a href="#" onclick="buscar('Renault')">Renault</a>
+            <a href="#" onclick="buscar('Chevrolet')">Chevrolet</a>
+            <a href="#" onclick="buscar('Hyundai')">Hyundai</a>
+        </div>
+        <div id="tipos" class="despegable" onmouseover="MostrarTipos()" onmouseout="OcultarCategorias()">
+            <a href="#" onclick="buscar('Hatchback')">Hatchback</a>
+            <a href="#" onclick="buscar('Sedan')">Sedan</a>
+            <a href="#" onclick="buscar('SUV')">SUV</a>
+            <a href="#" onclick="buscar('PickUp')">PickUp</a>
+            <a href="#" onclick="buscar('Deportivo')">Deportivo</a>
+        </div>
+        <div id="transmision" class="despegable" onmouseover="MostrarTransmision()" onmouseout="OcultarCategorias()">
+            <a href="#" onclick="buscar('Manual')">Manual</a>
+            <a href="#" onclick="buscar('Automatica')">Automatica</a>
+        </div>
+        <div id="combustible" class="despegable" onmouseover="MostrarCombustible()" onmouseout="OcultarCategorias()">
+            <a href="#" onclick="buscar('Corriente')">Corriente</a>
+            <a href="#" onclick="buscar('Extra')">Extra</a>
+            <a href="#" onclick="buscar('Diesel')">Diesel</a>
+        </div>
+        <div id="contenido"></div>
+        <div id="contenidoinicial">
+            <section id="bienvenida">
+                <h2>Renta Confort Medellin</h2>
+                <p>
+                ¡Bienvenido a Renta Confort, su mejor opción para alquilar vehículos! En Renta Confort, 
+                entendemos que cada viaje es único y especial, por eso ofrecemos una amplia gama de autos 
+                modernos y confortables para satisfacer todas sus necesidades. Ya sea que necesite un vehículo 
+                compacto para la ciudad, un elegante sedán para reuniones de negocios o una espaciosa SUV para 
+                sus aventuras familiares, en Renta Confort tenemos el auto perfecto para usted. Disfrute de tarifas 
+                competitivas, un servicio al cliente excepcional y la comodidad de viajar con estilo. ¡Reserve su 
+                carro hoy y descubra la diferencia de conducir con Renta Confort!</p>
+                <button>Ver Autos Disponibles</button>
+                <img src="https://rentacarmedellin.co/src/img/white-car.webp" alt="carro blanco">
+            </section>
+            <section id="tarjetasprinci">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://rentacarmedellin.co/src/img/home-car-1.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 18rem;">
+                    <img src="https://rentacarmedellin.co/src/img/home-car-2.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 18rem;">
+                    <img src="https://rentacarmedellin.co/src/img/home-car-3.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+            </section>
+        </div>
+        <footer><img src="../imagenes/Logo2.0.png" alt=""></footer>
     </main>
 </body>
 </html>

@@ -12,9 +12,15 @@ body{
     justify-content: center;
     width: 100%;
     height: 100%;
+    background-color: black;
+
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 header{
+    position: fixed;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -24,6 +30,8 @@ header{
     align-items: center;
     background-color: black;
     border-bottom: 8px solid rgb(151, 11, 11);
+    width: 100%;
+    z-index: 1000;
 }
 
 #opciones{
@@ -31,7 +39,7 @@ header{
     height: 70%;
     margin-right: 20%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     gap: 20px;
     justify-content:center;
@@ -66,4 +74,174 @@ header a:hover{
     header a{
         font-size: 16px;
     }
+}
+
+.despegable{
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    margin-top: 4.9%;
+    margin-left: 60%;
+    padding: 1%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-items:center;
+    justify-content: flex-start;
+    text-align:left;
+    width: 15%;
+    height: 35%;
+    font-size: 1.3vw;
+    font-weight: 600;
+    z-index: 1100;
+    background-color: white;
+    border-radius: 5px;
+    border-top: 4px solid rgb(151, 11, 11);
+}
+
+.despegable a{
+    color: black;
+    text-decoration: none;
+    padding: 1%;
+}
+.despegable a:hover{
+    color:rgb(151, 11, 11) ;
+}
+
+#bienvenida{
+    margin-top: 10%;
+    color: antiquewhite;
+    font-size: 1.7vw;
+    padding: 5%;
+}
+#bienvenida h2{
+    text-align: center;
+    margin-bottom: 5%;
+}
+#bienvenida img{
+    width: 45%;
+    position: absolute;
+    margin-left: 30%;
+    margin-top: 2%;
+}
+
+#bienvenida button{
+    font-size: 1.7vw;
+    border-radius: 30px;
+    padding: 0.7vw;
+    background-color: rgb(245, 24, 24);
+    color: whitesmoke;
+    margin-top: 7%;
+}
+
+#bienvenida button:hover{
+    background-color: rgb(151, 11, 11);
+    color: rgba(245, 245, 245, 0.795);
+    cursor: pointer;
+}
+
+#tarjetasprinci{
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+
+    margin-top: -5%;
+}
+.card{
+    margin-top: 17%;
+    margin-bottom: 8%;
+    width:31vw;
+    color: whitesmoke;
+}
+.card-body{
+    display: flex;
+    flex-direction: column;
+}
+.card-img-top{
+    width: 27vw;
+}
+.card-title{
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 2.5vw;
+}
+.btn-primary{
+    padding: 2%;
+    margin-top: 10%;
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: 1.5vw;
+    border: 2px solid whitesmoke;
+    border-radius: 20px;
+    text-align: center;
+}
+
+footer{
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    border-top: 8px solid rgb(151, 11, 11);
+}
+footer img{
+    width: 25%;
+}
+
+.productos{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-template-columns: auto auto auto;
+    column-gap: 1.5em;
+    row-gap: 1.5em;
+    padding: 2em 0;
+}
+
+.encabezado2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: whitesmoke;
+    font-size: 3vw;
+}
+
+.tarjeta{
+    position: relative;
+    max-width: 22em;
+    border-radius: 22px;
+    background: #ED213A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border: 5px solid whitesmoke;
+    cursor: pointer;
+}
+
+.prueba{
+    font-size: min(3vw, 33px);
+    font-weight:700;
+    color:whitesmoke;
+}
+
+.imagen-tarjeta{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    margin-bottom: -0.19vw;
+    opacity: 0.75;
+}
+
+.BotonPagina{
+    margin-bottom: 1vw;
+    font-size: min(1.6vw, 20px);
+    border: 1.5px solid whitesmoke;
+    margin: 0.1vw;
+    margin-bottom: 2vw;
 }

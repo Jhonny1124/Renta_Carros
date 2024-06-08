@@ -260,23 +260,22 @@ function productos(datos) {//Funcion que crea tarjetas para los carros
       imagen.alt = dato.referencia;
 
       tarjeta.addEventListener("mouseenter", function(){
-        nombre.style.fontSize = "min(3.5vw, 37px)";
-        nombre.style.transition = "font-size 0.4s ease"; 
         imagen.style.opacity = "0.65";
         imagen.style.transition = "opacity 0.4s ease"; 
       });
       tarjeta.addEventListener("mouseleave", function(){
-        nombre.style.fontSize = "min(3vw, 33px)";
-        nombre.style.transition = "font-size 0.4s ease"; 
-        imagen.style.opacity = "0.75";
+        imagen.style.opacity = "1";
         imagen.style.transition = "opacity 0.4s ease"; 
       });
 
       let boton = document.createElement("button");
       boton.textContent = "Reservar";
+      boton.style.cursor = "pointer";
+      boton.classList.add("BotonReserva");
 
       let precio = document.createElement("p");
       precio.textContent = dato.precio;
+      precio.classList.add("Precio");
 
       tarjeta.appendChild(imagen);
       tarjeta.appendChild(nombre);
@@ -302,6 +301,7 @@ function productos(datos) {//Funcion que crea tarjetas para los carros
     PaginasMostradas.appendChild(boton);
   }
   contenido.appendChild(PaginasMostradas);
+  contenido.style.marginTop = "10%";
 }
 
 function Inicio(){
